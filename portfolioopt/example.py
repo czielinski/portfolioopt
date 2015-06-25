@@ -25,7 +25,7 @@
 import numpy as np
 import pandas as pd
 
-import portfolioopt
+import portfolio
 
 
 def section(caption):
@@ -69,21 +69,21 @@ def main():
     print(cov_mat)
 
     section("Minimum variance portfolio")
-    weights = portfolioopt.min_var_portfolio(cov_mat)
+    weights = portfolio.min_var_portfolio(cov_mat)
     print_portfolio_info(returns, avg_rets, weights)
 
     # Define some target return, here the 70% quantile of the average returns
     target_ret = avg_rets.quantile(0.7)
     section("Markowitz portfolio (target return: {:.5f})".format(target_ret))
-    weights = portfolioopt.markowitz_portfolio(cov_mat, avg_rets, target_ret)
+    weights = portfolio.markowitz_portfolio(cov_mat, avg_rets, target_ret)
     print_portfolio_info(returns, avg_rets, weights)
 
     section("Tangency portfolio (long only)")
-    weights = portfolioopt.tangency_portfolio(cov_mat, avg_rets)
+    weights = portfolio.tangency_portfolio(cov_mat, avg_rets)
     print_portfolio_info(returns, avg_rets, weights)
 
     section("Tangency portfolio (long/short)")
-    weights = portfolioopt.tangency_portfolio(cov_mat, avg_rets, long_only=False)
+    weights = portfolio.tangency_portfolio(cov_mat, avg_rets, long_only=False)
     print_portfolio_info(returns, avg_rets, weights)
 
 
