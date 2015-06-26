@@ -4,9 +4,9 @@ This module provides a set of functions for financial portfolio optimization, su
 
 ### Installation
 
-Clone the repository via `git clone https://github.com/czielinski/portfolioopt.git` and install the module requirements via `pip install -r requirements.txt`.
+Clone the repository via `git clone https://github.com/czielinski/portfolioopt.git` and install the module requirements via `pip install -r requirements.txt`. Please also read the `LICENSE` file.
 
-The file `portfolioopt/portfolio.py` provides the optimization routines, `portfolioopt/example.py` provides a simple usage example.
+The module `portfolio` provides the optimization routines, `example.py` provides a simple usage example.
 
 ### Example
 

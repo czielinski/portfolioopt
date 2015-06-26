@@ -29,8 +29,8 @@ import portfolio
 
 
 def section(caption):
-    print '\n\n' + str(caption)
-    print '-' * len(caption)
+    print('\n\n' + str(caption))
+    print('-' * len(caption))
 
 
 def print_portfolio_info(returns, avg_rets, weights):
