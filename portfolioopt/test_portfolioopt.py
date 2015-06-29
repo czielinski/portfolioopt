@@ -29,6 +29,9 @@ import pandas as pd
 import portfolioopt as pfopt
 
 
+__all__ = ['create_test_data']
+
+
 def create_test_data(my_seed=42, num_days=100):
     """
     Creates some test returns data together with
