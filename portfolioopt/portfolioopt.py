@@ -30,6 +30,7 @@ import warnings
 __all__ = ['markowitz_portfolio',
            'min_var_portfolio',
            'tangency_portfolio',
+           'max_ret_portfolio',
            'truncate_weights']
 
 
@@ -185,6 +186,30 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
 
     # Rescale weights, so that sum(weights) = 1
     weights /= weights.sum()
+    return weights
+
+
+def max_ret_portfolio(exp_rets):
+    """
+    Computes a maximum return portfolio, i.e. selects the
+    assets with maximal return. If there is more than one asset
+    with maximal return, equally weight all of them.
+    
+    Parameters
+    ----------
+    exp_rets: pandas.Series
+        Expected asset returns (often historical returns).
+
+    Returns
+    -------
+    weights: pandas.Series
+        Optimal asset weights.
+    """
+    weights = exp_rets[:]
+    weights[weights == weights.max()] = 1.0
+    weights[weights != weights.max()] = 0.0
+    weights /= weights.sum()
+
     return weights
 
 

@@ -84,7 +84,8 @@ def main():
     print_portfolio_info(returns, avg_rets, weights)
 
     section("Tangency portfolio (long/short)")
-    weights = pfopt.tangency_portfolio(cov_mat, avg_rets, allow_short=True)
+    #weights = pfopt.tangency_portfolio(cov_mat, avg_rets, allow_short=True)
+    weights = pfopt.max_ret_portfolio(avg_rets)
     print_portfolio_info(returns, avg_rets, weights)
 
 

@@ -91,7 +91,6 @@ class TestMarkowitzPortfolio(unittest.TestCase):
 class TestMinVarPortfolio(unittest.TestCase):
     def test_long_only(self):
         returns, cov_mat, avg_rets = create_test_data()
-        target_ret = avg_rets.quantile(0.7)
 
         calc_weights = pfopt.min_var_portfolio(cov_mat).values
         exp_weights = [0.29428271128647232, 0.19221596707310873, 0.13820590476491501,
@@ -101,7 +100,6 @@ class TestMinVarPortfolio(unittest.TestCase):
 
     def test_allow_short(self):
         returns, cov_mat, avg_rets = create_test_data()
-        target_ret = avg_rets.quantile(0.7)
 
         calc_weights = pfopt.min_var_portfolio(cov_mat, allow_short=True).values
         exp_weights = [0.29428401463312454, 0.19221716939564482, 0.13820233202108606,
@@ -113,7 +111,6 @@ class TestMinVarPortfolio(unittest.TestCase):
 class TestTangencyPortfolio(unittest.TestCase):
     def test_long_only(self):
         returns, cov_mat, avg_rets = create_test_data()
-        target_ret = avg_rets.quantile(0.7)
 
         calc_weights = pfopt.tangency_portfolio(cov_mat, avg_rets).values
         exp_weights = [0.013637652162222968, 0.37065128018786714, 1.6549667634656901e-09,
@@ -123,13 +120,35 @@ class TestTangencyPortfolio(unittest.TestCase):
 
     def test_allow_short(self):
         returns, cov_mat, avg_rets = create_test_data()
-        target_ret = avg_rets.quantile(0.7)
 
         calc_weights = pfopt.tangency_portfolio(cov_mat, avg_rets, allow_short=True).values
         exp_weights = [0.048052417309504825, 0.63522794399754601, -0.53498204281249118,
                        0.93698599544795846, -0.085284313942518161]
 
         self.assertTrue(np.allclose(calc_weights, exp_weights))
+
+
+class TestMaxRetPortfolio(unittest.TestCase):
+    def test_one_max(self):
+        returns, cov_mat, avg_rets = create_test_data()
+
+        calc_weights = pfopt.max_ret_portfolio(avg_rets).values
+        exp_weights = [0.0, 0.0, 0.0, 1.0, 0.0]
+
+        self.assertTrue(np.allclose(calc_weights, exp_weights))
+
+    def test_three_max(self):
+        returns, cov_mat, avg_rets = create_test_data()
+
+        max_ret = avg_rets.max()
+        avg_rets[avg_rets.index[1]] = max_ret
+        avg_rets[avg_rets.index[2]] = max_ret
+
+        calc_weights = pfopt.max_ret_portfolio(avg_rets).values
+        exp_weights = [0.0, 1./3, 1./3, 1./3, 0.0]
+
+        self.assertTrue(np.allclose(calc_weights, exp_weights))
+
 
 
 class TestTruncateWeights(unittest.TestCase):
