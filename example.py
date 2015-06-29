@@ -47,16 +47,7 @@ def print_portfolio_info(returns, avg_rets, weights):
 
 
 def main():
-    np.random.seed(42)
-
-    num_days = 100
-    data = np.random.normal(loc=0.001, scale=0.05, size=(num_days, 5))
-    dates = pd.date_range('1/1/2000', periods=num_days, freq='D', tz='UTC')
-    assets = ['asset_a', 'asset_b', 'asset_c', 'asset_d', 'asset_e']
-
-    returns = pd.DataFrame(data, columns=assets, index=dates)
-    avg_rets = returns.mean()
-    cov_mat = returns.cov()
+    returns, cov_mat, avg_rets = pfopt.create_test_data()
     
     section("Example returns")
     print(returns.head(10))

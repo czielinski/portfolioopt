@@ -23,3 +23,4 @@
 from __future__ import absolute_import
 
 from .portfolioopt import *
+from .test_portfolioopt import create_test_data
