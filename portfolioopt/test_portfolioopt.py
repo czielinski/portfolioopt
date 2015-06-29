@@ -88,7 +88,7 @@ class TestMarkowitzPortfolio(unittest.TestCase):
         self.assertTrue(np.allclose(calc_weights, exp_weights))
 
 
-class MinVarPortfolio(unittest.TestCase):
+class TestMinVarPortfolio(unittest.TestCase):
     def test_long_only(self):
         returns, cov_mat, avg_rets = create_test_data()
         target_ret = avg_rets.quantile(0.7)
@@ -110,7 +110,7 @@ class MinVarPortfolio(unittest.TestCase):
         self.assertTrue(np.allclose(calc_weights, exp_weights))
 
 
-class TangencyPortfolio(unittest.TestCase):
+class TestTangencyPortfolio(unittest.TestCase):
     def test_long_only(self):
         returns, cov_mat, avg_rets = create_test_data()
         target_ret = avg_rets.quantile(0.7)
@@ -130,6 +130,24 @@ class TangencyPortfolio(unittest.TestCase):
                        0.93698599544795846, -0.085284313942518161]
 
         self.assertTrue(np.allclose(calc_weights, exp_weights))
+
+
+class TestTruncateWeights(unittest.TestCase):
+    def test_truncate(self):
+        raw_weights = pd.Series([0.5, 0.4, 0.01, 0.09], index=['a', 'b', 'c', 'd'])
+
+        adj_weights = pfopt.truncate_weights(raw_weights, min_weight=0.05, rescale=False)
+        exp_weights = raw_weights[:]
+        exp_weights['c'] = 0.0
+
+        self.assertTrue((adj_weights == exp_weights).all())
+
+    def test_rescale(self):
+        raw_weights = pd.Series([0.5, 0.4, 0.01, 0.8], index=['a', 'b', 'c', 'd'])
+
+        adj_weights = pfopt.truncate_weights(raw_weights, min_weight=0.0, rescale=True)
+
+        self.assertTrue(np.isclose(adj_weights.sum(), 1.0))
 
 
 if __name__ == '__main__':

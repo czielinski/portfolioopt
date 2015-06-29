@@ -29,7 +29,8 @@ import warnings
 
 __all__ = ['markowitz_portfolio',
            'min_var_portfolio',
-           'tangency_portfolio']
+           'tangency_portfolio',
+           'truncate_weights']
 
 
 def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
@@ -185,3 +186,33 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
     # Rescale weights, so that sum(weights) = 1
     weights /= weights.sum()
     return weights
+
+
+def truncate_weights(weights, min_weight=0.01, rescale=True):
+    """
+    Truncates small weight vectors, i.e. sets weights below a treshold to zero.
+    This can be helpful to remove portfolio weights, which are negligibly small.
+    
+    Parameters
+    ----------
+    weights: pandas.Series
+        Optimal asset weights.
+    min_weight: float, optional
+        All weights, for which the absolute value is smaller
+        than this parameter will be set to zero.
+    rescale: boolean, optional
+        If 'True', rescale weights so that weights.sum() == 1.
+        If 'False', do not rescale.
+
+    Returns
+    -------
+    adj_weights: pandas.Series
+        Adjusted weights.
+    """
+    adj_weights = weights[:]
+    adj_weights[adj_weights.abs() < min_weight] = 0.0
+
+    if rescale:
+        adj_weights /= adj_weights.sum()
+
+    return adj_weights

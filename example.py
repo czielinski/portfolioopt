@@ -80,6 +80,7 @@ def main():
 
     section("Tangency portfolio (long only)")
     weights = pfopt.tangency_portfolio(cov_mat, avg_rets)
+    weights = pfopt.truncate_weights(weights)   # Truncate some tiny weights
     print_portfolio_info(returns, avg_rets, weights)
 
     section("Tangency portfolio (long/short)")
