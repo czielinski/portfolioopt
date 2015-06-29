@@ -238,6 +238,9 @@ def truncate_weights(weights, min_weight=0.01, rescale=True):
     adj_weights[adj_weights.abs() < min_weight] = 0.0
 
     if rescale:
+        if adj_weights.sum() == 0.0:
+            raise ValueError("Cannot rescale weight vector as sum is zero")
+        
         adj_weights /= adj_weights.sum()
 
     return adj_weights
