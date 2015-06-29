@@ -25,7 +25,7 @@
 import numpy as np
 import pandas as pd
 
-import portfolio
+import portfolioopt as pfopt
 
 
 def section(caption):
@@ -68,22 +68,31 @@ def main():
     section("Covariance matrix")
     print(cov_mat)
 
-    section("Minimum variance portfolio")
-    weights = portfolio.min_var_portfolio(cov_mat)
+    section("Minimum variance portfolio (long only)")
+    weights = pfopt.min_var_portfolio(cov_mat)
+    print_portfolio_info(returns, avg_rets, weights)
+
+    section("Minimum variance portfolio (long/short)")
+    weights = pfopt.min_var_portfolio(cov_mat, allow_short=True)
     print_portfolio_info(returns, avg_rets, weights)
 
     # Define some target return, here the 70% quantile of the average returns
     target_ret = avg_rets.quantile(0.7)
-    section("Markowitz portfolio (target return: {:.5f})".format(target_ret))
-    weights = portfolio.markowitz_portfolio(cov_mat, avg_rets, target_ret)
+
+    section("Markowitz portfolio (long only, target return: {:.5f})".format(target_ret))
+    weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret)
+    print_portfolio_info(returns, avg_rets, weights)
+
+    section("Markowitz portfolio (long/short, target return: {:.5f})".format(target_ret))
+    weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret, allow_short=True)
     print_portfolio_info(returns, avg_rets, weights)
 
     section("Tangency portfolio (long only)")
-    weights = portfolio.tangency_portfolio(cov_mat, avg_rets)
+    weights = pfopt.tangency_portfolio(cov_mat, avg_rets)
     print_portfolio_info(returns, avg_rets, weights)
 
     section("Tangency portfolio (long/short)")
-    weights = portfolio.tangency_portfolio(cov_mat, avg_rets, long_only=False)
+    weights = pfopt.tangency_portfolio(cov_mat, avg_rets, allow_short=True)
     print_portfolio_info(returns, avg_rets, weights)
 
 

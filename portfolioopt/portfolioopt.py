@@ -32,7 +32,7 @@ __all__ = ['markowitz_portfolio',
            'tangency_portfolio']
 
 
-def markowitz_portfolio(cov_mat, exp_rets, target_ret, long_only=True):
+def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
     """
     Computes a Markowitz portfolio.
 
@@ -44,9 +44,9 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, long_only=True):
         Expected asset returns (often historical returns).
     target_ret: float
         Target return of portfolio.
-    long_only: float, optional
-        If 'True', construct a long-only portfolio.
-        If 'False' allow shorting, i.e. negative weights.
+    allow_short: float, optional
+        If 'False', construct a long-only portfolio.
+        If 'True' allow shorting, i.e. negative weights.
 
     Returns
     -------
@@ -59,7 +59,7 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, long_only=True):
     q = opt.matrix(0.0, (n, 1))
 
     # Constraints Gx <= h
-    if long_only:
+    if not allow_short:
         # exp_rets*x >= target_ret and x >= 0
         G = opt.matrix(np.vstack((-exp_rets.values,
                                   -np.identity(n))))
@@ -87,7 +87,7 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, long_only=True):
     return weights
 
 
-def min_var_portfolio(cov_mat, long_only=True):
+def min_var_portfolio(cov_mat, allow_short=False):
     """
     Computes the minimum variance portfolio.
     
@@ -95,9 +95,9 @@ def min_var_portfolio(cov_mat, long_only=True):
     ----------
     cov_mat: pandas.DataFrame
         Covariance matrix of asset returns.
-    long_only: float, optional
-        If 'True', construct a long-only portfolio.
-        If 'False' allow shorting, i.e. negative weights.
+    allow_short: float, optional
+        If 'False', construct a long-only portfolio.
+        If 'True' allow shorting, i.e. negative weights.
 
     Returns
     -------
@@ -110,7 +110,7 @@ def min_var_portfolio(cov_mat, long_only=True):
     q = opt.matrix(0.0, (n, 1))
 
     # Constraints Gx <= h
-    if long_only:
+    if not allow_short:
         # x >= 0
         G = opt.matrix(-np.identity(n))
         h = opt.matrix(0.0, (n, 1))
@@ -135,7 +135,7 @@ def min_var_portfolio(cov_mat, long_only=True):
     return weights
 
 
-def tangency_portfolio(cov_mat, exp_rets, long_only=True):
+def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
     """
     Computes a tangency portfolio,
     i.e. a maximum Sharpe ratio portfolio.
@@ -146,9 +146,9 @@ def tangency_portfolio(cov_mat, exp_rets, long_only=True):
         Covariance matrix of asset returns.
     exp_rets: pandas.Series
         Expected asset returns (often historical returns).
-    long_only: float, optional
-        If 'True', construct a long-only portfolio.
-        If 'False' allow shorting, i.e. negative weights.
+    allow_short: float, optional
+        If 'False', construct a long-only portfolio.
+        If 'True' allow shorting, i.e. negative weights.
 
     Returns
     -------
@@ -161,7 +161,7 @@ def tangency_portfolio(cov_mat, exp_rets, long_only=True):
     q = opt.matrix(0.0, (n, 1))
 
     # Constraints Gx <= h
-    if long_only:
+    if not allow_short:
         # exp_rets*x >= 1 and x >= 0
         G = opt.matrix(np.vstack((-exp_rets.values,
                                   -np.identity(n))))
