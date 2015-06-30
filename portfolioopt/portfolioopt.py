@@ -55,6 +55,18 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
     weights: pandas.Series
         Optimal asset weights.
     """
+    if not isinstance(cov_mat, pd.DataFrame):
+        raise ValueError("Covariance matrix is not a DataFrame")
+
+    if not isinstance(exp_rets, pd.Series):
+        raise ValueError("Expected returns is not a Series")
+
+    if not isinstance(target_ret, float):
+        raise ValueError("Target return is not a float")
+
+    if not cov_mat.index.equals(exp_rets.index):
+        raise ValueError("Indices do not match")
+
     n = len(cov_mat)
 
     P = opt.matrix(cov_mat.values)
@@ -85,7 +97,7 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
         warnings.warn("Convergence problem")
 
     # Put weights into a labeled series
-    weights = pd.Series(sol['x'], index=cov_mat.columns)
+    weights = pd.Series(sol['x'], index=cov_mat.index)
     return weights
 
 
@@ -106,6 +118,9 @@ def min_var_portfolio(cov_mat, allow_short=False):
     weights: pandas.Series
         Optimal asset weights.
     """
+    if not isinstance(cov_mat, pd.DataFrame):
+        raise ValueError("Covariance matrix is not a DataFrame")
+
     n = len(cov_mat)
 
     P = opt.matrix(cov_mat.values)
@@ -133,7 +148,7 @@ def min_var_portfolio(cov_mat, allow_short=False):
         warnings.warn("Convergence problem")
 
     # Put weights into a labeled series
-    weights = pd.Series(sol['x'], index=cov_mat.columns)
+    weights = pd.Series(sol['x'], index=cov_mat.index)
     return weights
 
 
@@ -157,6 +172,15 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
     weights: pandas.Series
         Optimal asset weights.
     """
+    if not isinstance(cov_mat, pd.DataFrame):
+        raise ValueError("Covariance matrix is not a DataFrame")
+
+    if not isinstance(exp_rets, pd.Series):
+        raise ValueError("Expected returns is not a Series")
+
+    if not cov_mat.index.equals(exp_rets.index):
+        raise ValueError("Indices do not match")
+
     n = len(cov_mat)
 
     P = opt.matrix(cov_mat.values)
@@ -182,7 +206,7 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
         warnings.warn("Convergence problem")
 
     # Put weights into a labeled series
-    weights = pd.Series(sol['x'], index=cov_mat.columns)
+    weights = pd.Series(sol['x'], index=cov_mat.index)
 
     # Rescale weights, so that sum(weights) = 1
     weights /= weights.sum()
@@ -205,6 +229,9 @@ def max_ret_portfolio(exp_rets):
     weights: pandas.Series
         Optimal asset weights.
     """
+    if not isinstance(exp_rets, pd.Series):
+        raise ValueError("Expected returns is not a Series")
+
     weights = exp_rets[:]
     weights[weights == weights.max()] = 1.0
     weights[weights != weights.max()] = 0.0
@@ -234,11 +261,14 @@ def truncate_weights(weights, min_weight=0.01, rescale=True):
     adj_weights: pandas.Series
         Adjusted weights.
     """
+    if not isinstance(weights, pd.Series):
+        raise ValueError("Weight vector is not a Series")
+
     adj_weights = weights[:]
     adj_weights[adj_weights.abs() < min_weight] = 0.0
 
     if rescale:
-        if adj_weights.sum() == 0.0:
+        if not adj_weights.sum():
             raise ValueError("Cannot rescale weight vector as sum is zero")
         
         adj_weights /= adj_weights.sum()

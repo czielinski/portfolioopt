@@ -27,7 +27,7 @@ from distutils.core import setup
 setup(
     name = 'portfolioopt',
     packages = ['portfolioopt'],
-    version = '0.1',
+    version = '0.2',
     description = 'Financial Portfolio Optimization Routines in Python',
     author = 'Christian Zielinski',
     author_email = 'email@czielinski.de',
