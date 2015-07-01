@@ -22,16 +22,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name = 'portfolioopt',
-    packages = ['portfolioopt'],
+    packages = find_packages(),
     version = '0.2',
-    description = 'Financial Portfolio Optimization Routines in Python',
+    description = 'Financial Portfolio Optimization Routines',
     author = 'Christian Zielinski',
     author_email = 'email@czielinski.de',
     url = 'https://github.com/czielinski/portfolioopt',
+    download_url='https://github.com/czielinski/portfolioopt/tarball/master',
+    test_suite = 'portfolioopt.test_portfolioopt.make_test_suite',
+    license = 'MIT',
     install_requires = [
         'numpy',
         'pandas',

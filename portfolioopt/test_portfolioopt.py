@@ -23,6 +23,8 @@
 # SOFTWARE.
 
 import unittest
+import sys
+
 import numpy as np
 import pandas as pd
 
@@ -167,6 +169,13 @@ class TestTruncateWeights(unittest.TestCase):
         adj_weights = pfopt.truncate_weights(raw_weights, min_weight=0.0, rescale=True)
 
         self.assertTrue(np.isclose(adj_weights.sum(), 1.0))
+
+
+def make_test_suite():
+    loader = unittest.TestLoader()
+    test_module = sys.modules[__name__]
+    suite = loader.loadTestsFromModule(test_module)
+    return suite
 
 
 if __name__ == '__main__':
