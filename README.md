@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/czielinski/portfolioopt.svg?branch=master)](https://travis-ci.org/czielinski/portfolioopt)
-[![Coverage Status](https://coveralls.io/repos/czielinski/portfolioopt/badge.svg?branch=master&service=github)](https://coveralls.io/github/czielinski/portfolioopt?branch=master)
 [![Downloads](https://img.shields.io/pypi/dm/portfolioopt.svg)](https://pypi.python.org/pypi/portfolioopt)
 # Financial Portfolio Optimization
 
