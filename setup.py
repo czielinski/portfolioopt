@@ -23,12 +23,19 @@
 # SOFTWARE.
 
 from setuptools import setup, find_packages
+import portfolioopt as pfopt
+
+doclines = pfopt.__doc__.split("\n")
+
+description = doclines[0]
+long_description = "\n".join(doclines[2:])
 
 setup(
     name = 'portfolioopt',
     packages = find_packages(),
-    version = '0.2',
-    description = 'Financial Portfolio Optimization Routines',
+    version = '0.3',
+    description=description,
+    long_description=long_description,
     author = 'Christian Zielinski',
     author_email = 'email@czielinski.de',
     url = 'https://github.com/czielinski/portfolioopt',
@@ -46,7 +53,7 @@ setup(
         'markowitz'
     ],
     classifiers = [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',

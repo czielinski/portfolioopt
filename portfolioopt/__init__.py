@@ -20,6 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""PortfolioOpt: Financial Portfolio Optimization
+
+This module provides a set of functions for financial portfolio
+optimization, such as construction of Markowitz portfolios, minimum
+variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio
+portfolios) in Python. The construction of long-only, long/short and
+market neutral portfolios is supported."""
+
 from __future__ import absolute_import
 
 from .portfolioopt import *
