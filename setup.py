@@ -22,20 +22,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""This module provides a set of functions for financial portfolio
+optimization, such as construction of Markowitz portfolios, minimum
+variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio
+portfolios) in Python. The construction of long-only, long/short and
+market neutral portfolios is supported."""
+
 from setuptools import setup, find_packages
-import portfolioopt as pfopt
 
-doclines = pfopt.__doc__.split("\n")
-
-description = doclines[0]
-long_description = "\n".join(doclines[2:])
+print __doc__
 
 setup(
     name = 'portfolioopt',
     packages = find_packages(),
-    version = '0.3',
-    description=description,
-    long_description=long_description,
+    version = '0.3.2',
+    description="PortfolioOpt: Financial Portfolio Optimization",
+    long_description=__doc__,
     author = 'Christian Zielinski',
     author_email = 'email@czielinski.de',
     url = 'https://github.com/czielinski/portfolioopt',
