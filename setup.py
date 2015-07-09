@@ -30,8 +30,6 @@ market neutral portfolios is supported."""
 
 from setuptools import setup, find_packages
 
-print __doc__
-
 setup(
     name = 'portfolioopt',
     packages = find_packages(),
