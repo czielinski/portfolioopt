@@ -1,6 +1,6 @@
 # Financial Portfolio Optimization
 
-This module provides a set of functions for financial portfolio optimization, such as construction of Markowitz portfolios, minimum variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio portfolios) in Python. Both the construction of long-only and long/short portfolios is supported.
+This module provides a set of functions for financial portfolio optimization, such as construction of Markowitz portfolios, minimum variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio portfolios) in Python. The construction of long-only, long/short and market neutral portfolios is supported. Please read the `docstring` of the function you intend to use by typing e.g. `help(portfolioopt.markowitz_portfolio)` in the interactive interpreter.
 
 ### Installation
 
@@ -50,8 +50,8 @@ asset_d -0.000220  0.000090  0.000020  0.002302  0.000047
 asset_e -0.000305  0.000151  0.000113  0.000047  0.002877
 
 
-Minimum variance portfolio
---------------------------
+Minimum variance portfolio (long only)
+--------------------------------------
 Optimal weights:
 asset_a    0.294283
 asset_b    0.192216
@@ -65,8 +65,23 @@ Expected variance: 0.000443881332631
 Expected Sharpe:   0.0712575531382
 
 
-Markowitz portfolio (target return: 0.00376)
---------------------------------------------
+Minimum variance portfolio (long/short)
+---------------------------------------
+Optimal weights:
+asset_a    0.294284
+asset_b    0.192217
+asset_c    0.138202
+asset_d    0.208795
+asset_e    0.166502
+dtype: float64
+
+Expected return:   0.0015013136255
+Expected variance: 0.000443881332596
+Expected Sharpe:   0.0712587148452
+
+
+Markowitz portfolio (long only, target return: 0.00376)
+-------------------------------------------------------
 Optimal weights:
 asset_a    0.235067
 asset_b    0.286836
@@ -80,19 +95,49 @@ Expected variance: 0.000587574392946
 Expected Sharpe:   0.154961396104
 
 
+Markowitz portfolio (long/short, target return: 0.00376)
+--------------------------------------------------------
+Optimal weights:
+asset_a    0.241321
+asset_b    0.287506
+asset_c   -0.006595
+asset_d    0.365424
+asset_e    0.112344
+dtype: float64
+
+Expected return:   0.00375616820372
+Expected variance: 0.000587278581077
+Expected Sharpe:   0.154996878211
+
+
+Markowitz portfolio (market neutral, target return: 0.00376)
+------------------------------------------------------------
+Optimal weights:
+asset_a   -0.088226
+asset_b    0.158734
+asset_c   -0.241207
+asset_d    0.260916
+asset_e   -0.090217
+dtype: float64
+
+Expected return:   0.00375618451738
+Expected variance: 0.000397921658527
+Expected Sharpe:   0.188299050118
+
+
 Tangency portfolio (long only)
 ------------------------------
 Optimal weights:
-asset_a    1.363765e-02
-asset_b    3.706513e-01
-asset_c    1.654967e-09
-asset_d    6.157111e-01
-asset_e    8.937734e-09
+asset_a    0.013638
+asset_b    0.370651
+asset_c    0.000000
+asset_d    0.615711
+asset_e    0.000000
 dtype: float64
 
-Expected return:   0.00633799763357
-Expected variance: 0.00123946652675
-Expected Sharpe:   0.180025767612
+Expected return:   0.00633799771227
+Expected variance: 0.00123946655115
+Expected Sharpe:   0.180025768076
 
 
 Tangency portfolio (long/short)
