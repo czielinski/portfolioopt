@@ -4,9 +4,11 @@ This module provides a set of functions for financial portfolio optimization, su
 
 ### Installation
 
-Clone the repository via `git clone https://github.com/czielinski/portfolioopt.git` and install the module via `python setup.py install`. To manually install the requirements you can also use `pip install -r requirements.txt`. You can run the tests with `python setup.py test` or with `python -m unittest discover` in the module directory. If everything is right, all tests should pass. Please also read the `LICENSE.txt` file.
+The easiest way of installing the library is with `pip install portfolioopt`. The PyPI information page can be found [here](https://pypi.python.org/pypi/portfolioopt).
 
-The `portfolioopt` module provides the optimization routines, the file `example.py` provides a simple usage example.
+To manually install the library, clone the repository via `git clone https://github.com/czielinski/portfolioopt.git` and install the module with `python setup.py install`. To install the requirements by hand you can also use `pip install -r requirements.txt`. You can run the tests with `python setup.py test` or with `python -m unittest discover` in the module directory. If everything is right, all tests should pass.
+
+The `portfolioopt` module provides the optimization routines, the file `example.py` provides a simple usage example. Please also read the `LICENSE.txt` file.
 
 ### Example
 
