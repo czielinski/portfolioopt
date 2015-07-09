@@ -34,7 +34,8 @@ __all__ = ['markowitz_portfolio',
            'truncate_weights']
 
 
-def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
+def markowitz_portfolio(cov_mat, exp_rets, target_ret,
+                        allow_short=False, market_neutral=False):
     """
     Computes a Markowitz portfolio.
 
@@ -46,10 +47,14 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
         Expected asset returns (often historical returns).
     target_ret: float
         Target return of portfolio.
-    allow_short: float, optional
-        If 'False', construct a long-only portfolio.
+    allow_short: bool, optional
+        If 'False' construct a long-only portfolio.
         If 'True' allow shorting, i.e. negative weights.
-
+    market_neutral: bool, optional
+        If 'False' sum of weights equals one.
+        If 'True' sum of weights equal zero, i.e. create a
+            market neutral portfolio (implies allow_short=True).
+            
     Returns
     -------
     weights: pandas.Series
@@ -66,6 +71,10 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
 
     if not cov_mat.index.equals(exp_rets.index):
         raise ValueError("Indices do not match")
+
+    if market_neutral and not allow_short:
+        warnings.warn("A market neutral portfolio implies shorting")
+        allow_short=True
 
     n = len(cov_mat)
 
@@ -87,7 +96,11 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
     # Constraints Ax = b
     # sum(x) = 1
     A = opt.matrix(1.0, (1, n))
-    b = opt.matrix(1.0)
+
+    if not market_neutral:
+        b = opt.matrix(1.0)
+    else:
+        b = opt.matrix(0.0)
 
     # Solve
     optsolvers.options['show_progress'] = False
@@ -104,13 +117,19 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False):
 def min_var_portfolio(cov_mat, allow_short=False):
     """
     Computes the minimum variance portfolio.
+    Note: As the variance is not invariant with respect
+          to leverage, it is not possible to construct non-trivial
+          market neutral minimum variance portfolios. This is because
+          the variance approaches zero with decreasing leverage,
+          i.e. the market neutral portfolio with minimum variance
+          is not invested at all.
     
     Parameters
     ----------
     cov_mat: pandas.DataFrame
         Covariance matrix of asset returns.
-    allow_short: float, optional
-        If 'False', construct a long-only portfolio.
+    allow_short: bool, optional
+        If 'False' construct a long-only portfolio.
         If 'True' allow shorting, i.e. negative weights.
 
     Returns
@@ -156,6 +175,11 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
     """
     Computes a tangency portfolio,
     i.e. a maximum Sharpe ratio portfolio.
+    Note: As the Sharpe ratio is not invariant with respect
+          to leverage, it is not possible to construct non-trivial
+          market neutral tangency portfolios. This is because for
+          a positive initial Sharpe ratio the sharpe grows unbound
+          with increasing leverage.
     
     Parameters
     ----------
@@ -163,8 +187,8 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
         Covariance matrix of asset returns.
     exp_rets: pandas.Series
         Expected asset returns (often historical returns).
-    allow_short: float, optional
-        If 'False', construct a long-only portfolio.
+    allow_short: bool, optional
+        If 'False' construct a long-only portfolio.
         If 'True' allow shorting, i.e. negative weights.
 
     Returns
@@ -215,9 +239,9 @@ def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
 
 def max_ret_portfolio(exp_rets):
     """
-    Computes a maximum return portfolio, i.e. selects the
-    assets with maximal return. If there is more than one asset
-    with maximal return, equally weight all of them.
+    Computes a long-only maximum return portfolio, i.e. selects
+    the assets with maximal return. If there is more than one
+    asset with maximal return, equally weight all of them.
     
     Parameters
     ----------

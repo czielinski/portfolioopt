@@ -78,6 +78,11 @@ def main():
     weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret, allow_short=True)
     print_portfolio_info(returns, avg_rets, weights)
 
+    section("Markowitz portfolio (market neutral, target return: {:.5f})".format(target_ret))
+    weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret, allow_short=True,
+                                                                       market_neutral=True)
+    print_portfolio_info(returns, avg_rets, weights)
+
     section("Tangency portfolio (long only)")
     weights = pfopt.tangency_portfolio(cov_mat, avg_rets)
     weights = pfopt.truncate_weights(weights)   # Truncate some tiny weights

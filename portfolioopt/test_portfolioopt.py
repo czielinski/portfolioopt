@@ -83,10 +83,24 @@ class TestMarkowitzPortfolio(unittest.TestCase):
         returns, cov_mat, avg_rets = create_test_data()
         target_ret = avg_rets.quantile(0.7)
 
-        calc_weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret, allow_short=True).values
+        calc_weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret,
+                                                 allow_short=True).values
         exp_weights = [0.24132125485063094, 0.28750580615601806, -0.0065950973956575331,
                        0.36542391192949747, 0.11234412445951109]
 
+        self.assertTrue(np.allclose(calc_weights, exp_weights))
+
+    def test_market_neutral(self):
+        returns, cov_mat, avg_rets = create_test_data()
+        target_ret = avg_rets.quantile(0.7)
+
+        calc_weights = pfopt.markowitz_portfolio(cov_mat, avg_rets, target_ret,
+                                                 allow_short=True, market_neutral=True).values
+
+        exp_weights = [-0.088226487071008788, 0.15873382946203626, -0.24120662493449421,
+                       0.26091591077682091, -0.090216628233354162]
+
+        self.assertTrue(np.isclose(calc_weights.sum(), 0.0))
         self.assertTrue(np.allclose(calc_weights, exp_weights))
 
 
@@ -150,7 +164,6 @@ class TestMaxRetPortfolio(unittest.TestCase):
         exp_weights = [0.0, 1./3, 1./3, 1./3, 0.0]
 
         self.assertTrue(np.allclose(calc_weights, exp_weights))
-
 
 
 class TestTruncateWeights(unittest.TestCase):
