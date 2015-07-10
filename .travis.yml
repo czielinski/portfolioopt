@@ -8,7 +8,7 @@ python:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-numpy python-pandas python-cvxopt
- - sudo apt-get install -qq python3-numpy python3-pandas
+ - sudo apt-get install -qq python3-numpy
 install:
   - pip install .
   - pip install -r requirements.txt
