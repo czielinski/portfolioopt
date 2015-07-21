@@ -1,4 +1,5 @@
 language: python
+sudo: true
 python:
   - "2.6"
   - "2.7"
@@ -6,11 +7,12 @@ python:
   - "3.3"
   - "3.4"
 before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq python-numpy python-pandas python-cvxopt
- - sudo apt-get install -qq python3-numpy
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq python-numpy python-pandas python-cvxopt
+  - sudo apt-get install -qq python3-numpy
 install:
-  - pip install .
+  - pip install --upgrade pip
   - pip install -r requirements.txt
+  - pip install .
 script:
   - py.test
