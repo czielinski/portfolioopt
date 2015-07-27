@@ -20,6 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""PortfolioOpt: Financial Portfolio Optimization
+
+This module provides a set of functions for financial portfolio
+optimization, such as construction of Markowitz portfolios, minimum
+variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio
+portfolios) in Python. The construction of long-only, long/short and
+market neutral portfolios is supported."""
+
 import numpy as np
 import pandas as pd
 import cvxopt as opt
@@ -117,12 +125,13 @@ def markowitz_portfolio(cov_mat, exp_rets, target_ret,
 def min_var_portfolio(cov_mat, allow_short=False):
     """
     Computes the minimum variance portfolio.
+
     Note: As the variance is not invariant with respect
-          to leverage, it is not possible to construct non-trivial
-          market neutral minimum variance portfolios. This is because
-          the variance approaches zero with decreasing leverage,
-          i.e. the market neutral portfolio with minimum variance
-          is not invested at all.
+    to leverage, it is not possible to construct non-trivial
+    market neutral minimum variance portfolios. This is because
+    the variance approaches zero with decreasing leverage,
+    i.e. the market neutral portfolio with minimum variance
+    is not invested at all.
     
     Parameters
     ----------
@@ -173,13 +182,13 @@ def min_var_portfolio(cov_mat, allow_short=False):
 
 def tangency_portfolio(cov_mat, exp_rets, allow_short=False):
     """
-    Computes a tangency portfolio,
-    i.e. a maximum Sharpe ratio portfolio.
+    Computes a tangency portfolio, i.e. a maximum Sharpe ratio portfolio.
+    
     Note: As the Sharpe ratio is not invariant with respect
-          to leverage, it is not possible to construct non-trivial
-          market neutral tangency portfolios. This is because for
-          a positive initial Sharpe ratio the sharpe grows unbound
-          with increasing leverage.
+    to leverage, it is not possible to construct non-trivial
+    market neutral tangency portfolios. This is because for
+    a positive initial Sharpe ratio the sharpe grows unbound
+    with increasing leverage.
     
     Parameters
     ----------
