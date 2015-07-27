@@ -1,0 +1,126 @@
+Help on module portfolioopt.portfolioopt in portfolioopt:
+
+NAME
+    portfolioopt.portfolioopt - PortfolioOpt: Financial Portfolio Optimization
+
+FILE
+    /usr/local/lib/python2.7/dist-packages/portfolioopt-0.3.3-py2.7.egg/portfolioopt/portfolioopt.py
+
+DESCRIPTION
+    This module provides a set of functions for financial portfolio
+    optimization, such as construction of Markowitz portfolios, minimum
+    variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio
+    portfolios) in Python. The construction of long-only, long/short and
+    market neutral portfolios is supported.
+
+FUNCTIONS
+    markowitz_portfolio(cov_mat, exp_rets, target_ret, allow_short=False, market_neutral=False)
+        Computes a Markowitz portfolio.
+        
+        Parameters
+        ----------
+        cov_mat: pandas.DataFrame
+            Covariance matrix of asset returns.
+        exp_rets: pandas.Series
+            Expected asset returns (often historical returns).
+        target_ret: float
+            Target return of portfolio.
+        allow_short: bool, optional
+            If 'False' construct a long-only portfolio.
+            If 'True' allow shorting, i.e. negative weights.
+        market_neutral: bool, optional
+            If 'False' sum of weights equals one.
+            If 'True' sum of weights equal zero, i.e. create a
+                market neutral portfolio (implies allow_short=True).
+                
+        Returns
+        -------
+        weights: pandas.Series
+            Optimal asset weights.
+    
+    max_ret_portfolio(exp_rets)
+        Computes a long-only maximum return portfolio, i.e. selects
+        the assets with maximal return. If there is more than one
+        asset with maximal return, equally weight all of them.
+        
+        Parameters
+        ----------
+        exp_rets: pandas.Series
+            Expected asset returns (often historical returns).
+        
+        Returns
+        -------
+        weights: pandas.Series
+            Optimal asset weights.
+    
+    min_var_portfolio(cov_mat, allow_short=False)
+        Computes the minimum variance portfolio.
+        
+        Note: As the variance is not invariant with respect
+        to leverage, it is not possible to construct non-trivial
+        market neutral minimum variance portfolios. This is because
+        the variance approaches zero with decreasing leverage,
+        i.e. the market neutral portfolio with minimum variance
+        is not invested at all.
+        
+        Parameters
+        ----------
+        cov_mat: pandas.DataFrame
+            Covariance matrix of asset returns.
+        allow_short: bool, optional
+            If 'False' construct a long-only portfolio.
+            If 'True' allow shorting, i.e. negative weights.
+        
+        Returns
+        -------
+        weights: pandas.Series
+            Optimal asset weights.
+    
+    tangency_portfolio(cov_mat, exp_rets, allow_short=False)
+        Computes a tangency portfolio, i.e. a maximum Sharpe ratio portfolio.
+        
+        Note: As the Sharpe ratio is not invariant with respect
+        to leverage, it is not possible to construct non-trivial
+        market neutral tangency portfolios. This is because for
+        a positive initial Sharpe ratio the sharpe grows unbound
+        with increasing leverage.
+        
+        Parameters
+        ----------
+        cov_mat: pandas.DataFrame
+            Covariance matrix of asset returns.
+        exp_rets: pandas.Series
+            Expected asset returns (often historical returns).
+        allow_short: bool, optional
+            If 'False' construct a long-only portfolio.
+            If 'True' allow shorting, i.e. negative weights.
+        
+        Returns
+        -------
+        weights: pandas.Series
+            Optimal asset weights.
+    
+    truncate_weights(weights, min_weight=0.01, rescale=True)
+        Truncates small weight vectors, i.e. sets weights below a treshold to zero.
+        This can be helpful to remove portfolio weights, which are negligibly small.
+        
+        Parameters
+        ----------
+        weights: pandas.Series
+            Optimal asset weights.
+        min_weight: float, optional
+            All weights, for which the absolute value is smaller
+            than this parameter will be set to zero.
+        rescale: boolean, optional
+            If 'True', rescale weights so that weights.sum() == 1.
+            If 'False', do not rescale.
+        
+        Returns
+        -------
+        adj_weights: pandas.Series
+            Adjusted weights.
+
+DATA
+    __all__ = ['markowitz_portfolio', 'min_var_portfolio', 'tangency_portf...
+
+
