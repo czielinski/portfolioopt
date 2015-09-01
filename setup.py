@@ -33,7 +33,7 @@ from setuptools import setup, find_packages
 setup(
     name = 'portfolioopt',
     packages = find_packages(),
-    version = '0.3.3',
+    version = '1.0.0',
     description = "PortfolioOpt: Financial Portfolio Optimization",
     long_description = __doc__,
     author = 'Christian Zielinski',
@@ -53,7 +53,7 @@ setup(
         'markowitz'
     ],
     classifiers = [
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
