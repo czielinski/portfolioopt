@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/czielinski/portfolioopt.svg?branch=master)](https://travis-ci.org/czielinski/portfolioopt)
 # Financial Portfolio Optimization
 
 This module provides a set of functions for financial portfolio optimization, such as construction of Markowitz portfolios, minimum variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio portfolios) in Python. The construction of long-only, long/short and market neutral portfolios is supported. Please read the `docstring` of the function you intend to use by typing e.g. `help(portfolioopt.markowitz_portfolio)` in the interactive interpreter. You can also find some documentation [here](https://raw.githubusercontent.com/czielinski/portfolioopt/master/doc/portfolioopt.txt).
