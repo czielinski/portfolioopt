@@ -1,5 +1,13 @@
 # Financial Portfolio Optimization
 
+_THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE._
+
 This module provides a set of functions for financial portfolio optimization, such as construction of Markowitz portfolios, minimum variance portfolios and tangency portfolios (i.e. maximum Sharpe ratio portfolios) in Python. The construction of long-only, long/short and market neutral portfolios is supported. Please read the `docstring` of the function you intend to use by typing e.g. `help(portfolioopt.markowitz_portfolio)` in the interactive interpreter. You can also find some documentation [here](https://raw.githubusercontent.com/czielinski/portfolioopt/master/doc/portfolioopt.txt).
 
 ### Installation
